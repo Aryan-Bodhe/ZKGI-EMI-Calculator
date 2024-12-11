@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const interestRateText = document.getElementById("interest-rate-text");
 
     const emiDisplay = document.getElementById("emi");
-
-    // const loanValue = document.getElementById("loan-value");
-
+    
     const offerDropdownContainer = document.getElementById("offer-dropdown-container");
     const offerDropdown = document.getElementById("offer-options");
     const premiumAmount = document.getElementById("premium-amount");
@@ -22,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         emiMonthly = 0;
         interestAmount = 0;
         const loanAmount = parseInt(loanAmountSlider.value, 10);
-        // loanValue.value = loanAmount.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0});
         const tenure = parseInt(tenureSlider.value, 10);
         const annualInterestRate = parseFloat(interestRateSlider.value);
 
@@ -78,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 offerDropdownContainer.style.display = "block";
                 const selectedOption = offerDropdown.value;
                 premium = { A2: 2576, A2C1: 3381, A2C2: 4057, A1C1: 2415 }[selectedOption] || 0;
-                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; // only when tenure is between 1 and 2 yrs
+                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; 
 
                 if(tenureInYears > 5) 
                     finalPremium = (premium) * (5) + additionalPrice;
@@ -113,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 else if(2 < tenureInYears)
                     finalPremium = (emiMonthly * emicoverRate * slabTenure) + (premium * slabTenure + additionalPrice);
                 else if(tenureInYears <= 1)
-                    finalPremium = (emiMonthly * emicoverRate);
+                    finalPremium = (emiMonthly * emicoverRate) + premium;
                 else
                     finalPremium = (emiMonthly * emicoverRate * slabTenure) + (premium * slabTenure); 
 
@@ -124,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 else if(2 < tenureInYears)
                     finalPremium = (emiMonthly * emicoverRate * slabTenure) + (hospi_individual * slabTenure + additionalPrice);
                 else if(tenureInYears <= 1)
-                    finalPremium = (emiMonthly * emicoverRate);
+                    finalPremium = (emiMonthly * emicoverRate) + hospi_individual;
                 else
                     finalPremium = (emiMonthly * emicoverRate * slabTenure) + (hospi_individual * slabTenure);
 
