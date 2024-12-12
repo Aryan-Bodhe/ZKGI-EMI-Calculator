@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function calculateEMI() {
         emiMonthly = 0;
         interestAmount = 0;
-        const loanAmount = parseInt(loanAmountSlider.value, 10);
+        const loanAmount = parseInt(loanAmountText.value, 10);
         const tenure = parseInt(tenureSlider.value, 10);
         const annualInterestRate = parseFloat(interestRateSlider.value);
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const offerTypeRadios = document.querySelectorAll("input[name='offer-type']");
     
     function calculatePremium() {
-        const loanAmount = parseInt(loanAmountSlider.value, 10);
+        const loanAmount = parseInt(loanAmountText.value, 10);
         const tenureInYears = parseInt(tenureSlider.value, 10) / 12; // Convert months to years
         const tenureExcessMonths = parseInt(tenureSlider.value, 10) % 12;
         const slabTenure = Math.ceil(tenureInYears);
@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         
-        // Final premium calculation
         if(loanAmount === 0) finalPremium = 0;
         
         emiDisplay.textContent = (emiMonthly).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
