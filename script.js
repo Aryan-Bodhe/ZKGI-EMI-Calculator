@@ -7,7 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const interestRateText = document.getElementById("interest-rate-text");
 
     const emiDisplay = document.getElementById("emi");
-    
+
+    const loanValueText = document.getElementById("loan-value");
+    const rateValueText = document.getElementById("rate-value");
+    const tenureValueText = document.getElementById("tenure-value");
+
     const offerDropdownContainer = document.getElementById("offer-dropdown-container");
     const offerDropdown = document.getElementById("offer-options");
     const premiumAmount = document.getElementById("premium-amount");
@@ -53,17 +57,32 @@ document.addEventListener("DOMContentLoaded", function () {
     tenureSlider.addEventListener("input", updateSliders);
     interestRateSlider.addEventListener("input", updateSliders);
 
-    loanAmountText.addEventListener("change", () => syncValues(loanAmountSlider, loanAmountText));
-    tenureText.addEventListener("change", () => syncValues(tenureSlider, tenureText));
-    interestRateText.addEventListener("change", () => syncValues(interestRateSlider, interestRateText));
+    loanAmountText.addEventListener("change", () => {
+        syncValues(loanAmountSlider, loanAmountText);
+    });
+    tenureText.addEventListener("change", () => {
+        syncValues(tenureSlider, tenureText);
+    });
+    interestRateText.addEventListener("change", () => {
+        syncValues(interestRateSlider, interestRateText)
+    });
     
     const offerTypeRadios = document.querySelectorAll("input[name='offer-type']");
     
     function calculatePremium() {
         const loanAmount = parseInt(loanAmountSlider.value, 10);
         const tenureInYears = parseInt(tenureSlider.value, 10) / 12; // Convert months to years
+        const tenureExcessMonths = parseInt(tenureSlider.value, 10) % 12;
         const slabTenure = Math.ceil(tenureInYears);
         const offerType = document.querySelector("input[name='offer-type']:checked").value;
+
+
+        loanValueText.textContent = loanAmount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        if(Math.floor(tenureInYears) === 0)
+            tenureValueText.textContent = `${tenureExcessMonths} Month(s)`;
+        else
+            tenureValueText.textContent = `${Math.floor(tenureInYears)} Year(s), ${tenureExcessMonths} Month(s)`;
+        rateValueText.textContent = interestRateSlider.value.toString();
 
         let premium = 0;
         let finalPremium = 0;
@@ -75,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 offerDropdownContainer.style.display = "block";
                 const selectedOption = offerDropdown.value;
                 premium = { A2: 2576, A2C1: 3381, A2C2: 4057, A1C1: 2415 }[selectedOption] || 0;
-                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; 
+                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; // only when tenure is between 1 and 2 yrs
 
                 if(tenureInYears > 5) 
                     finalPremium = (premium) * (5) + additionalPrice;
@@ -102,8 +121,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (loanAmount >= 500000) {
                 offerDropdownContainer.style.display = "block";
                 const selectedOption = offerDropdown.value;
+                console.log('Offer dropdown value',selectedOption);
                 premium = { A2: 2576, A2C1: 3381, A2C2: 4057, A1C1: 2415 }[selectedOption] || 0;
-                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; // only when tenure is between 1 and 2 yrs
+                additionalPrice = {A2: 16, A2C1: 21, A2C2: 26, A1C1: 15}[selectedOption] || 0; 
 
                 if(tenureInYears > 5) 
                     finalPremium = (emiMonthly * emicoverRate * 5) + (premium * 5) + additionalPrice;
@@ -163,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
         calculateEMI();
         calculatePremium();
     });
-
+    
     offerDropdown.addEventListener("change", () => {
         calculateEMI();
         calculatePremium();
