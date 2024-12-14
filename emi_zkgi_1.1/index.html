@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZKGI KMPL Premium Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="calculator">
+        <h1>CF ZKGI Premium Calculator</h1>
+
+        <!-- Loan Amount -->
+        <div class="slider-group">
+            <label for="loan-amount"></label>
+            <div class="input-group">
+                Financed Amount :  
+                <input type="number" id="loan-amount-text" min="0" max="20000000" step="10000" value="500000">₹
+            </div>
+
+            <div class = "range-endpoints">
+            <span> </span> 
+            <h3> <span>₹ <span id = "loan-value">500,000</span> </h3>
+            </span>
+            </div>
+
+            <input type="range" id="loan-amount" min="0" max="20000000" step="10000" value="500000">
+            <div class="range-endpoints">
+                <span>₹0</span>
+                <span>₹2 Crore</span>
+            </div>
+        </div>
+
+        <!-- Tenure -->
+        <div class="slider-group">
+            <label for="tenure"></label>
+            <div class="input-group">
+                Tenure (Months) :
+                <input type="number" id="tenure-text" min="1" max="84" step="1" value="12">
+                <span>M</span>
+            </div>
+
+            <div class = "range-endpoints">
+                <span></span> 
+                <span>
+                <h3> <span id = "tenure-value"></span></h3>
+                </span>
+                </div>
+
+            <input type="range" id="tenure" min="1" max="84" step="1" value="12">
+            <div class="range-endpoints">
+                <span>1 Month</span>
+                <span>84 Months</span>
+            </div>
+        </div>
+
+        <!-- Interest Rate -->
+        <div class="slider-group">
+            <label for="interest-rate"></label>
+            <div class="input-group">
+                Interest Rate (p.a.) : 
+                <input type="number" id="interest-rate-text" min="5" max="25" step="0.05" value="10">
+                <span>%</span>
+            </div>
+
+            <div class = "range-endpoints">
+                <span></span>
+                <span> 
+                <h3> <span id = "rate-value">10</span>% </h3>
+                </span>
+                </div>
+
+            <input type="range" id="interest-rate" min="5" max="25" step="0.05" value="10">
+            <div class="range-endpoints">
+                <span>5%</span>
+                <span>25%</span>
+            </div>
+        </div>
+
+        <table style="width: 100%; height: inherit;">
+            <tr>
+                <td>
+                    <!-- Add this block after the EMI results section -->
+                    <div class="offer-section">
+                        <h2>ZKGI Products</h2>
+
+                        <!-- Offer Selection -->
+                        <div>
+                            <label>
+                                <input type="radio" name="offer-type" value="hospicash" checked>
+                                Standalone HospiCash
+                            </label>
+                            <label>
+                                <input type="radio" name="offer-type" value="hospicash-emi">
+                                HospiCash + EMI Cover
+                            </label>
+                        </div>
+
+                        <!-- Offer Message -->
+                        <p id="offer-message"></p>
+
+                        <!-- Dropdown for additional options -->
+                        <div id="offer-dropdown-container" style="display: none;">
+                            <!-- <label for="offer-options">Choose cover benefits:</label> -->
+                            <select id="offer-options" style="border-color: #007bff;">
+                                <!-- A2: 2576, A2C1: 3381, A2C2: 4057, A1C2: 3107 -->
+                                <option value="A2">2A</option>
+                                <option value="A2C1">2A+1C</option>
+                                <option value="A2C2">2A+2C</option>
+                                <option value="A1C1">1A+1C</option>
+                            </select>
+                        </div>
+
+                        <!-- Premium Amount -->
+                        <p id="premium-amount"></p>
+                    </div>
+                </td>
+                <td>
+                    <!-- EMI Results -->
+                    <div class="emi-result">
+                        <h3>Your Monthly EMI will be</h3>
+                        <div class="emi-amount">₹ <span id="emi">0</span>/- p.m.</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
